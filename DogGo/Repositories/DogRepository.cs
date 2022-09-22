@@ -32,7 +32,8 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"SELECT Id, [Name], Breed, Notes, ImageUrl, OwnerId
-                                        FROM Dog";
+                                        FROM Dog
+                                        ";
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         List<Dog> dogs = new List<Dog>();

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using DogGo.Repositories;
+using DogGo.Models.ViewModels;
 
 namespace DogGo.Controllers
 {
@@ -21,12 +22,11 @@ namespace DogGo.Controllers
         {
             Walker walker = _walkerRepo.GetWalkerById(id);
 
-            if (walker == null)
+            ProfileViewModel vm = new ProfileViewModel()
             {
-                return NotFound();
-            }
-
-            return View(walker);
+                Walker = walker
+            };
+            return View(vm);
         }
 
         // GET: WalkersController/Create
