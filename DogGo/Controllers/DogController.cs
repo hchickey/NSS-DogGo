@@ -15,9 +15,17 @@ namespace DogGo.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            int ownerId = GetCurrentUserId();
-            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(ownerId);
-            return View(dogs);
+            try
+            {
+                int ownerId = GetCurrentUserId();
+                List<Dog> dogs = _dogRepo.GetDogsByOwnerId(ownerId);
+                return View(dogs);
+            }
+            catch (Exception)
+            {
+                List<Dog> dogs = _dogRepo.GetAllDogs();
+                return View(dogs);
+            }
         }
 
         // GET: DogController/Details/5
@@ -77,6 +85,8 @@ namespace DogGo.Controllers
         {
             try
             {
+                dog.OwnerId = GetCurrentUserId();
+
                 _dogRepo.UpdateDog(dog);
                 return RedirectToAction("Index");
             }
@@ -101,6 +111,8 @@ namespace DogGo.Controllers
         {
             try
             {
+                dog.OwnerId = GetCurrentUserId();
+
                 _dogRepo.DeleteDog(id);
                 return RedirectToAction("Index");
             }
